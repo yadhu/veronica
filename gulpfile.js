@@ -1,42 +1,62 @@
-var gulp = require('gulp'), 
-    sass = require('gulp-ruby-sass') 
-    notify = require("gulp-notify") 
-    bower = require('gulp-bower');
+var gulp = require('gulp'),
+    sass = require('gulp-ruby-sass'),
+    notify = require("gulp-notify"),
+    bower = require('gulp-bower'),
+    rimraf = require('rimraf'),
+    runSequence = require('run-sequence');
 
 var config = {
-     sassPath: './resources/sass',
-     bowerDir: './bower_components' 
+    sassPath: './resources/sass',
+    bowerDir: './bower_components',
+    jsPath: './resources/js'
 }
 
-gulp.task('bower', function() { 
+
+gulp.task('clean', function (cb) {
+  rimraf('dist/assets/', cb);
+});
+
+gulp.task('bower', function() {
     return bower()
-         .pipe(gulp.dest(config.bowerDir)) 
+        .pipe(gulp.dest(config.bowerDir))
 });
 
-gulp.task('icons', function() { 
-    return gulp.src(config.bowerDir + '/fontawesome/fonts/**.*') 
-        .pipe(gulp.dest('./public/fonts')); 
+gulp.task('icons', function() {
+    return gulp.src(config.bowerDir + '/fontawesome/fonts/**.*')
+        .pipe(gulp.dest('./dist/assets/fonts'));
 });
 
-gulp.task('css', function() { 
+gulp.task('css', function() {
     return gulp.src(config.sassPath + '/style.scss')
-         .pipe(sass({
-             style: 'compressed',
-             loadPath: [
-                 './resources/sass',
-                 config.bowerDir + '/bootstrap-sass-official/assets/stylesheets',
-                 config.bowerDir + '/fontawesome/scss',
-             ]
-         }) 
+        .pipe(sass({
+            style: 'compressed',
+            loadPath: [
+                './resources/sass',
+                config.bowerDir + '/bootstrap-sass-official/assets/stylesheets',
+                config.bowerDir + '/fontawesome/scss',
+            ]
+        })
             .on("error", notify.onError(function (error) {
-                 return "Error: " + error.message;
-             }))) 
-         .pipe(gulp.dest('./public/css')); 
+                return "Error: " + error.message;
+            })))
+        .pipe(gulp.dest('./dist/assets/css'));
+});
+
+gulp.task('movejs', function() {
+   gulp.src([
+   	'./bower_components/jquery/dist/*.js',
+   	'resources/js/*.js'
+   	])
+   .pipe(gulp.dest('dist/assets/js'));
 });
 
 // Rerun the task when a file changes
- gulp.task('watch', function() {
-     gulp.watch(config.sassPath + '/**/*.scss', ['css']); 
+gulp.task('watch', function() {
+    gulp.watch(config.sassPath + '/**/*.scss', ['css']);
 });
 
-  gulp.task('default', ['bower', 'icons', 'css']);
+gulp.task('default', function() {
+  runSequence('clean',
+              ['bower', 'icons','css','movejs']
+              );
+});

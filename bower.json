@@ -1,11 +1,13 @@
 {
-  "name": "gulp-bower-bootstrap-fontawesome",
-  "version": "0.0.0",
-  "homepage": "https://github.com/ericbarnes/gulp-bower-bootstrap-fontawesome",
+  "name": "veronica",
+  "description": "initializer",
+  "main": "",
   "authors": [
-    "Eric Barnes <eric@ericlbarnes.com>"
+    "auyadhu <yadhuau@gmail.com>"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/yadhu/veronica",
+  "moduleType": [],
   "ignore": [
     "**/.*",
     "node_modules",
