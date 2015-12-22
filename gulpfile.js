@@ -65,6 +65,8 @@ gulp.task('img-opt', function(){
 // Rerun the task when a file changes
 gulp.task('watch', function() {
     gulp.watch(config.sassPath + '/**/*.scss', ['css']);
+    gulp.watch('./resources/img/*', ['img-opt']);
+    gulp.watch('resources/js/*.js', ['movejs']);
 });
 
 gulp.task('default', function() {
