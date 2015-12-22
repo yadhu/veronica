@@ -3,8 +3,10 @@
     "gulp": "^3.9.0",
     "gulp-bower": "0.0.10",
     "gulp-clean": "^0.3.1",
+    "gulp-imagemin": "^2.4.0",
     "gulp-notify": "^2.2.0",
     "gulp-ruby-sass": "^0.7.1",
+    "imagemin-pngquant": "^4.2.0",
     "run-sequence": "^1.1.5"
   }
 }

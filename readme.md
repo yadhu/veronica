@@ -1,5 +1,5 @@
 # Veronica
-Front end automation using gulp
+Web App initializer using gulp-sass-bower
 
 
 ## Installation

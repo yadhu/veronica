@@ -3,7 +3,9 @@ var gulp = require('gulp'),
     notify = require("gulp-notify"),
     bower = require('gulp-bower'),
     rimraf = require('rimraf'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+    imagemin = require('gulp-imagemin'),
+    pngquant = require('imagemin-pngquant');
 
 var config = {
     sassPath: './resources/sass',
@@ -50,6 +52,16 @@ gulp.task('movejs', function() {
    .pipe(gulp.dest('dist/assets/js'));
 });
 
+gulp.task('img-opt', function(){
+  return gulp.src ('./resources/img/*')
+    .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngquant()]
+    }))
+    .pipe(gulp.dest('dist/assets/img'))
+  });
+
 // Rerun the task when a file changes
 gulp.task('watch', function() {
     gulp.watch(config.sassPath + '/**/*.scss', ['css']);
@@ -57,6 +69,6 @@ gulp.task('watch', function() {
 
 gulp.task('default', function() {
   runSequence('clean',
-              ['bower', 'icons','css','movejs']
+              ['bower', 'icons','css','movejs', 'img-opt']
               );
 });

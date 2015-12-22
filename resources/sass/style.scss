@@ -3,11 +3,5 @@ $font-family-base: 'Raleway', sans-serif;
 
 @import "_bootstrap";
 @import "font-awesome";
+@import "_global";
 
-body {
-  padding-top: 50px;
-}
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
-}
