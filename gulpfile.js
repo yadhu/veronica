@@ -29,7 +29,11 @@ gulp.task('icons', function() {
 });
 
 gulp.task('css', function() {
-    return gulp.src(config.sassPath + '/style.scss')
+    return gulp.src([
+        config.sassPath + '/style.scss',
+        config.sassPath + '/bootstrap.scss',
+        config.bowerDir + '/fontawesome/scss/font-awesome.scss'
+      ])
         .pipe(sass({
             style: 'compressed',
             loadPath: [
